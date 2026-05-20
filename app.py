@@ -4,6 +4,8 @@ import psycopg2
 
 from pipelines.mongodb_pipeline import run as run_mongo
 from pipelines.mapreduce_pipeline import run as run_mr
+from pipelines.hive_pipeline import run as run_hive
+from pipelines.pig_pipeline import run as run_pig
 
 
 # ─────────────────────────────────────────────
@@ -34,7 +36,9 @@ pipeline = st.sidebar.selectbox(
     "Select Pipeline",
     [
         "MongoDB",
-        "MapReduce"
+        "MapReduce",
+        "Hive",
+        "Pig"
     ]
 )
 
@@ -73,6 +77,12 @@ if run_button:
 
     elif pipeline == "MapReduce":
         run_id = run_mr(LOG_FILE, batch_size)
+
+    elif pipeline == "Hive":
+        run_id = run_hive(LOG_FILE, batch_size)
+
+    elif pipeline == "Pig":
+        run_id = run_pig(LOG_FILE, batch_size)
 
     st.success(f"Pipeline completed! Run ID: {run_id}")
 
